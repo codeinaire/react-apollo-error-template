@@ -6,12 +6,15 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 
 import { link } from "./graphql/link";
 import App from "./App";
+import { resolvers, typeDefs } from './resolvers';
 
 import "./index.css";
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
-  link
+  link,
+  resolvers,
+  typeDefs
 });
 
 render(

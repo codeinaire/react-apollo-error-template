@@ -1,6 +1,7 @@
 import React from "react";
-import { useQuery } from "@apollo/react-hooks";
+import { ApolloProvider, useQuery, useMutation } from '@apollo/react-hooks';
 import gql from "graphql-tag";
+import { CREATE_USER_DEETS, GET_USER_DEETS } from './resolvers';
 
 const ALL_PEOPLE = gql`
   query AllPeople {
@@ -16,10 +17,25 @@ export default function App() {
     loading,
     data: { people }
   } = useQuery(ALL_PEOPLE);
+  const [createUserDeets, { data }] = useMutation(CREATE_USER_DEETS);
+  const { data1, loading1, error } = useQuery(GET_USER_DEETS, {
+    variables: { id: "test-user" }
+  });
+
+  console.log('this is DATA', data1, loading1, error);
+
 
   return (
     <main>
       <h1>Apollo Client Issue Reproduction</h1>
+      <button onClick={() => createUserDeets({
+      variables: {
+        id: 'test-again134',
+        accessToken: 'test-access-again',
+        idToken: 'testing'
+      }
+    })}>MUTATE!!!!!</button>
+    <p>This is DATA {JSON.stringify(data1)}</p>
       <p>
         This application can be used to demonstrate an error in Apollo Client.
       </p>
